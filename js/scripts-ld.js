@@ -1,47 +1,33 @@
-async function getPeople() {
-        await fetch('https://api.tvmaze.com/personas/1', {
-            mode: 'cors',
-            credentials: 'include'
-          })
-        .then(response => response.json())
-        .then(JSON => peopleApi = JSON);
-        
-console.log(peopleApi)
-    const peopleListElement = document.getElementById("people-list");
+fetch('https://api.tvmaze.com/shows/2/cast')
+  .then(response => response.json())
+  .then(data => {
+    const castElement = document.getElementById('cast');
 
-    function renderPeople(people) {
-        if (people.length > 0) {
-            let cards = [];
-            for (let person of people) {
-                const personCard = `
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">${person.name}</h5>
-                                <p class="card-text">Country: ${person.country.name}</p>
-                                <p class="card-text">Birthday: ${person.birthday}</p>
-                           </div>
-                        </div>
-                    </div>
-                `;
-                cards.push(personCard);
-            }
-            peopleListElement.innerHTML = cards.join("");
-        } else {
-            peopleListElement.innerHTML = `
-            <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">No People Found!</h3>
-                    <p class="card-text">No people are available at the moment.</p>
-                </div>
-            </div>
-        </div>
-    `;
-}
-}
+    //a cont se recorren los datos para mostrar el elemento 'cast'
+    data.forEach(actor => {
+     const actorElement = document.createElement('div');
+      actorElement.classList.add('actor');
 
-renderPeople(peopleApi);
-}
+    const actorImage = document.createElement('img');
+      actorImage.src = actor.person.image.medium;
+      actorImage.alt = `Foto de ${actor.person.name}`;
+      actorElement.appendChild(actorImage);
 
-getPeople();
+    const actorName = document.createElement('p');
+      actorName.textContent = `Nombre: ${actor.person.name}`;
+      actorElement.appendChild(actorName);
+
+    const actorCountry = document.createElement('p');
+      actorCountry.textContent = `País: ${actor.person.country ? actor.person.country.name : 'Desconocido'}`;
+      actorElement.appendChild(actorCountry);
+
+     const actorBirthYear = document.createElement('p');
+      actorBirthYear.textContent = `Año de nacimiento: ${actor.person.birthday ? actor.person.birthday.substring(0, 4) : 'Desconocido'}`;
+      actorElement.appendChild(actorBirthYear);
+
+      castElement.appendChild(actorElement);
+    });
+  })
+  .catch(error => {
+    console.log('Ha ocurrido un error:', error);
+  });
