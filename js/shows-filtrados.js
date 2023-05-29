@@ -16,23 +16,28 @@ document.addEventListener('DOMContentLoaded', function () {
             // Si deseas eliminar elementos duplicados, utiliza el método filter
             checkboxFilter = checkboxFilter.filter((genre, index, self) => {
                 return self.indexOf(genre) === index;
-            });
+            }); // Con este .map recorremos el array original filtramos por "category" y con "new Set" eliminamos los repetidos 
 
-            const Checks = new Set(checkboxFilter);
-            let checkboxs = [...Checks];
             let checkHtml = "";
-            checkboxs.forEach(check => {
+            checkboxFilter.forEach(check => {
                 checkHtml += `<label><input type="checkbox" value="${check}">${check}</label>`;
             });
             checkboxes.innerHTML = checkHtml; // Imprimimos el template armado
+
+            checkboxSelected = []; // Reiniciamos el arreglo de checkboxes seleccionados
         }
 
         function arrayFiltered() {
-            const showsFiltrados = showsMasVistos.filter(show => {
-                return checkboxSelected.every(genre => show.genres.includes(genre));
+            const showsFiltered = showsApi.filter(show => {
+                if (checkboxSelected.length === 0) {
+                    return true; // Si no hay checkbox seleccionados, mostrar todos los programas
+                } else {
+                    // Verificar si algún género del programa coincide con los checkbox seleccionados
+                    return show.genres.some(genre => checkboxSelected.includes(genre));
+                }
             });
 
-            renderCards(showsFiltrados);
+            renderCards(showsFiltered);
         }
 
         function verMas() {
@@ -67,38 +72,38 @@ document.addEventListener('DOMContentLoaded', function () {
                     const summary = show.summary && show.summary.length > 2 ? (show.summary.length > 40 ? show.summary.substring(0, 40) + '...' : show.summary) : '';
                     const uniqueId = `resumen-${show.id}`;
                     const card = `
-                        <div class="card card-home" style="display: none;">
-                            <img src="${show.image.original}" class="card-img-top" alt="${show.name} Image">
-                            <div class="card text-center card-show">
-                                <div class="card-header">
-                                    Serie
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">${show.name}</h5>
-                                    <p class="card-text summary-short" id="${uniqueId}" data-contenido="${show.summary}">${summary}</p>
-                                    <button class="mostrar-mas btn btn-primary" data-unique-id="${uniqueId}" data-summary="${show.summary}" > Mostrar más</button>
-                                    <a href="./index-ld.html?id=${show.id}" class="btn btn-primary">Más sobre ${show.name}</a>
-                                </div>
-                                <div class="card-footer text-body-secondary">
-                                    Puntaje Medio: ${show.rating.average}
-                                </div>
-                            </div>
-                        </div>
-                    `;
+            <div class="card card-home" style="display: none;">
+              <img src="${show.image.original}" class="card-img-top" alt="${show.name} Image">
+              <div class="card text-center card-show">
+                <div class="card-header">
+                  Serie
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">${show.name}</h5>
+                  <p class="card-text summary-short" id="${uniqueId}" data-contenido="${show.summary}">${summary}</p>
+                  <button class="mostrar-mas btn btn-primary" data-unique-id="${uniqueId}" data-summary="${show.summary}" > Mostrar más</button>
+                  <a href="./index-ld.html?id=${show.id}" class="btn btn-primary">Más sobre ${show.name}</a>
+                </div>
+                <div class="card-footer text-body-secondary">
+                  Puntaje Medio: ${show.rating.average}
+                </div>
+              </div>
+            </div>
+          `;
                     cards.push(card);
                 }
                 showsContainer.innerHTML = cards.join("");
             } else {
                 showsContainer.innerHTML = `
-                    <div class="col">
-                        <div class="card">
-                            <img src="./img/notfound.jpg" class="card-img-top" alt="Event Not Found">
-                            <div class="card-body">
-                                <h5 class="card-title">Show Not Found!</h5>
-                                <p class="card-text">The event you are looking for was not found!</p>
-                            </div>
-                        </div>
-                    </div>`;
+          <div class="col">
+            <div class="card">
+              <img src="./img/notfound.jpg" class="card-img-top" alt="Event Not Found">
+              <div class="card-body">
+                <h5 class="card-title">Show Not Found!</h5>
+                <p class="card-text">The event you are looking for was not found!</p>
+              </div>
+            </div>
+          </div>`;
             }
         }
 
