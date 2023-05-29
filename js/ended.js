@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', function () {
     async function getShows() {
         const response = await fetch("https://api.tvmaze.com/shows");
         const showsApi = await response.json();
-        const showsMasVistos = showsApi.filter(show => show.rating.average >= 8);
-        const showEnded = showsApi.filter(show => show.status === "Ended" && show.rating.average >= 8.5);
+        // const showRunning = showsApi.filter(show => show.rating.average >= 8);
+        // const showEnded = showsApi.filter(show => show.status === "Ended" && show.rating.average >= 8.5);
         const showRunning = showsApi.filter(show => show.status === "Running" && show.rating.average >= 8);
 
         let numElementosMostrados = 3; // Número inicial de elementos mostrados
 
         function verMas() {
-            const showsContainer = document.getElementById("shows-masVistos");
+            const showsContainer = document.getElementById("shows-running");
             const elementos = showsContainer.children;
             const btnVerMas = document.getElementById("btn-ver-mas");
 
@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     `;
                     cards.push(card);
                 }
-                document.getElementById("shows-masVistos").innerHTML = cards.join("");
+                document.getElementById("shows-running").innerHTML = cards.join("");
             } else {
-                document.getElementById("shows-masVistos").innerHTML =
+                document.getElementById("shows-running").innerHTML =
                     `<div class="col">
                         <div class="card">
                             <img src="./img/notfound.jpg" class="card-img-top" alt="Event Not Found">
@@ -96,18 +96,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function inicializar() {
-            renderCards(showsMasVistos);
+            renderCards(showRunning);
 
             const btnVerMas = document.getElementById('btn-ver-mas');
             btnVerMas.addEventListener('click', verMas);
 
-            const showsContainer = document.getElementById("shows-masVistos");
+            const showsContainer = document.getElementById("shows-running");
             const elementos = showsContainer.children;
             console.log(elementos);
-            for (let i = 1; i < elementos.length && i < 5; i++) {
+            for (let i = 1; i < elementos.length && i < 6; i++) {
                 elementos[i].style.display = "block";
             }
             if (elementos.length > 4) {
+                elementos[1].style.display = "none";
                 elementos[3].style.display = "none";
             }
 
@@ -123,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }
-        
+
         inicializar();
     }
 

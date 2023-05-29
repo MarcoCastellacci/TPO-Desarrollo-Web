@@ -1,15 +1,42 @@
 document.addEventListener('DOMContentLoaded', function () {
+    let checkboxSelected = [];
+
     async function getShows() {
         const response = await fetch("https://api.tvmaze.com/shows");
         const showsApi = await response.json();
         const showsMasVistos = showsApi.filter(show => show.rating.average >= 8);
-        const showEnded = showsApi.filter(show => show.status === "Ended" && show.rating.average >= 8.5);
-        const showRunning = showsApi.filter(show => show.status === "Running" && show.rating.average >= 8);
+        console.log(showsMasVistos);
 
-        let numElementosMostrados = 3; // Número inicial de elementos mostrados
+        function crearChecks() {
+            let checkboxes = document.getElementById(`checkbox`); // Llamamos al Id del Html
+            let checkboxFilter = showsApi
+                .map(checks => checks.genres) // Obtener el array de géneros para cada objeto
+                .flat(); // Aplanar los arrays en uno solo
+
+            // Si deseas eliminar elementos duplicados, utiliza el método filter
+            checkboxFilter = checkboxFilter.filter((genre, index, self) => {
+                return self.indexOf(genre) === index;
+            });
+
+            const Checks = new Set(checkboxFilter);
+            let checkboxs = [...Checks];
+            let checkHtml = "";
+            checkboxs.forEach(check => {
+                checkHtml += `<label><input type="checkbox" value="${check}">${check}</label>`;
+            });
+            checkboxes.innerHTML = checkHtml; // Imprimimos el template armado
+        }
+
+        function arrayFiltered() {
+            const showsFiltrados = showsMasVistos.filter(show => {
+                return checkboxSelected.every(genre => show.genres.includes(genre));
+            });
+
+            renderCards(showsFiltrados);
+        }
 
         function verMas() {
-            const showsContainer = document.getElementById("shows-masVistos");
+            const showsContainer = document.getElementById("shows-filtrados");
             const elementos = showsContainer.children;
             const btnVerMas = document.getElementById("btn-ver-mas");
 
@@ -31,6 +58,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function renderCards(showsArray) {
+            const showsContainer = document.getElementById("shows-filtrados");
+            showsContainer.innerHTML = "";
+
             if (showsArray.length > 0) {
                 let cards = [];
                 for (let show of showsArray) {
@@ -57,10 +87,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     `;
                     cards.push(card);
                 }
-                document.getElementById("shows-masVistos").innerHTML = cards.join("");
+                showsContainer.innerHTML = cards.join("");
             } else {
-                document.getElementById("shows-masVistos").innerHTML =
-                    `<div class="col">
+                showsContainer.innerHTML = `
+                    <div class="col">
                         <div class="card">
                             <img src="./img/notfound.jpg" class="card-img-top" alt="Event Not Found">
                             <div class="card-body">
@@ -96,12 +126,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function inicializar() {
-            renderCards(showsMasVistos);
+            crearChecks();
+
+            const checkbox = document.querySelectorAll("input[type=checkbox]");
+            checkbox.forEach(check => check.addEventListener("click", (event) => {
+                let checked = event.target.checked;
+                if (checked) {
+                    checkboxSelected.push(event.target.value);
+                } else {
+                    checkboxSelected = checkboxSelected.filter(nocheckeado => nocheckeado !== event.target.value);
+                }
+                arrayFiltered();
+            }));
 
             const btnVerMas = document.getElementById('btn-ver-mas');
             btnVerMas.addEventListener('click', verMas);
 
-            const showsContainer = document.getElementById("shows-masVistos");
+            const showsContainer = document.getElementById("shows-filtrados");
             const elementos = showsContainer.children;
             console.log(elementos);
             for (let i = 1; i < elementos.length && i < 5; i++) {
@@ -123,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }
-        
+
         inicializar();
     }
 

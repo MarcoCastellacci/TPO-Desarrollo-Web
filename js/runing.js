@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', function () {
     async function getShows() {
         const response = await fetch("https://api.tvmaze.com/shows");
         const showsApi = await response.json();
-        const showsMasVistos = showsApi.filter(show => show.rating.average >= 8);
+        // const showEnded = showsApi.filter(show => show.rating.average >= 8);
         const showEnded = showsApi.filter(show => show.status === "Ended" && show.rating.average >= 8.5);
         const showRunning = showsApi.filter(show => show.status === "Running" && show.rating.average >= 8);
 
         let numElementosMostrados = 3; // Número inicial de elementos mostrados
 
         function verMas() {
-            const showsContainer = document.getElementById("shows-masVistos");
+            const showsContainer = document.getElementById("shows-ended");
             const elementos = showsContainer.children;
             const btnVerMas = document.getElementById("btn-ver-mas");
 
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (showsArray.length > 0) {
                 let cards = [];
                 for (let show of showsArray) {
-                    const summary = show.summary && show.summary.length > 2 ? (show.summary.length > 40 ? show.summary.substring(0, 40) + '...' : show.summary) : '';
+                    const summary = show.summary && show.summary.length > 2 ? (show.summary.length > 50 ? show.summary.substring(0, 50) + '...' : show.summary) : '';
                     const uniqueId = `resumen-${show.id}`;
                     const card = `
                         <div class="card card-home" style="display: none;">
@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     `;
                     cards.push(card);
                 }
-                document.getElementById("shows-masVistos").innerHTML = cards.join("");
+                document.getElementById("shows-ended").innerHTML = cards.join("");
             } else {
-                document.getElementById("shows-masVistos").innerHTML =
+                document.getElementById("shows-ended").innerHTML =
                     `<div class="col">
                         <div class="card">
                             <img src="./img/notfound.jpg" class="card-img-top" alt="Event Not Found">
@@ -96,12 +96,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function inicializar() {
-            renderCards(showsMasVistos);
+            renderCards(showEnded);
 
             const btnVerMas = document.getElementById('btn-ver-mas');
             btnVerMas.addEventListener('click', verMas);
 
-            const showsContainer = document.getElementById("shows-masVistos");
+            const showsContainer = document.getElementById("shows-ended");
             const elementos = showsContainer.children;
             console.log(elementos);
             for (let i = 1; i < elementos.length && i < 5; i++) {

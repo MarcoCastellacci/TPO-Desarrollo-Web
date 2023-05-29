@@ -1,0 +1,162 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+body {
+    background-color: #c1c7ca;
+}
+
+.links {
+    margin-top: 20px;
+}
+
+.checkbox{
+    margin: .1rem .1rem;
+}
+
+.links a {
+    display: inline-block;
+    margin: 15px;
+    padding: 10px 10px;
+    border-radius: 17px;
+    border: 3px solid black;
+    background-color: #748db5;
+    /*fondo para los botones*/
+    text-decoration: none;
+    /*saco subrayado de link*/
+    color: #140340;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.links a:hover {
+    color: rgb(243, 243, 238);
+    font-weight: bolder;
+    background-color: rgb(13, 7, 63);
+}
+
+h1 {
+    color: azure;
+    width: 100%;
+}
+
+header {
+    background-color: #172c56;
+    /*fondo header*/
+    text-align: center;
+    padding: 20px;
+}
+
+.card-home {
+    width: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: rgb(222, 228, 232);
+}
+
+.btn {
+    margin: 0.2rem;
+}
+
+.btn a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.show-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 60%;
+    margin: 1.5rem 0.2rem;
+}
+
+.show-card {
+    margin: 0.5rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    flex-grow: 1;
+}
+
+.show-card img {
+    margin: 1.5rem 0.5rem;
+    display: flex;
+    width: 20%;
+    height: 20%;
+    object-fit: contain;
+}
+
+.card-show {
+    margin: 1.5rem 0.2rem;
+    display: flex;
+    flex-grow: 1;
+    height: auto;
+}
+
+/* Estilos para el contenedor del popup */
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo semitransparente */
+}
+
+/* Estilos para el contenido del popup */
+.popup-content {
+    width: 90%;
+    max-width: 500px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.popup-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgb(190, 48, 48);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 400;
+    border-radius: 5px;
+}
+
+.popup-close-button:hover {
+    box-shadow: 2px 2px 8px 1px rgb(236, 97, 97);
+}
+
+footer {
+    background-color: #172c56;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+}
+
+.tiutlo{
+    width: 50%;
+}
+
+.social-icons img {
+    width: 30px;
+    display: flex;
+    margin-right: 10px;
+}

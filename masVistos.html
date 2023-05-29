@@ -5,34 +5,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styel-masvistos.css">
+    <link rel="stylesheet" href="/css/animacion-txt.css">
+    <title>Codo a Codo</title>
 </head>
 
 <body>
-    
     <header>
-        <nav>
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
-                </li>
-            </ul>
-        </nav>
+        <div class="container">
+            <img src="https://static.tvmaze.com/images/tvm-header-logo.png" alt="Logo de TVMaze">
+            <br>
+            <br>
+            <br>
+            <br>
+            <h1>LAS MEJORES SERIES</h1>
+            <br>
+
+            <div class="links">
+                <a href="./index.html">Home</a>
+                <a href="./masVistos.html">Mas Vistos</a>
+                <a href="./shows-filtrados.html">Busca tu Serie</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
     </header>
     <main>
-        <div>
+        <div class="container">
+            <section>
+                <h2 class="smokemonster">Series Mas Vistas</h2>
+            </section>
             <article id="shows" class="show-container">
                 <div id="shows-masVistos" class="show-card">
                     <button class="mostrar-mas">Mostrar más</button>
@@ -41,12 +44,29 @@
         </div>
     </main>
     <footer>
+        <div class="titulo">
+            <h1>TPO - Codo a Codo</h1>
+        </div>
+        <div class="titulo">
+            <div class="social-icons">
+                <a href="https://www.facebook.com/tvmaze/" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/128/2626/2626269.png" alt="facebook">
+                </a>
+                <a href="https://www.instagram.com/tvmazecom/" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3955/3955024.png" alt="instagram">
+                </a>
+                <a href="https://twitter.com/tvmaze?lang=es" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3670/3670151.png" alt="twitter">
+                </a>
+                <a href="https://web.whatsapp.com/" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/128/220/220236.png" alt="whatsapp">
+                </a>
+            </div>
+        </div>
     </footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
-<script src="./js/scripts-mc.js"></script>
-<script src="./js/main-mc.js"></script>
-
+<script src="./js/mas-vistos.js"></script>
 </html>

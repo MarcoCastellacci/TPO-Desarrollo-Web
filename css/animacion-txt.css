@@ -1,0 +1,92 @@
+img {
+    animation: my-animation 2s ease-in-out infinite;
+}
+
+@keyframes my-animation {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(150px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+
+h2 {
+    color: hsla(0, 0%, 0%, .9);
+    font: normal 40px Varela Round, sans-serif;
+    left: 0;
+    letter-spacing: 5px;
+    text-align: center;
+    text-transform: uppercase;
+    top: 50%;
+    width: 100%;
+    animation: move linear 2000ms infinite;
+}
+
+@keyframes move {
+    0% {
+        text-shadow:
+            4px -4px 0 hsla(256, 100%, 50%, 1),
+            3px -3px 0 hsla(256, 100%, 50%, 1),
+            2px -2px 0 hsla(256, 100%, 50%, 1),
+            1px -1px 0 hsla(256, 100%, 50%, 1),
+            -4px 4px 0 hsla(180, 100%, 50%, 1),
+            -3px 3px 0 hsla(180, 100%, 50%, 1),
+            -2px 2px 0 hsla(180, 100%, 50%, 1),
+            -1px 1px 0 hsla(180, 100%, 50%, 1);
+    }
+
+    25% {
+        text-shadow:
+            -4px -4px 0 hsla(180, 100%, 50%, 1),
+            -3px -3px 0 hsla(180, 100%, 50%, 1),
+            -2px -2px 0 hsla(180, 100%, 50%, 1),
+            -1px -1px 0 hsla(180, 100%, 50%, 1),
+            4px 4px 0 hsla(256, 100%, 50%, 1),
+            3px 3px 0 hsla(256, 100%, 50%, 1),
+            2px 2px 0 hsla(256, 100%, 50%, 1),
+            1px 1px 0 hsla(256, 100%, 50%, 1),
+    }
+
+    50% {
+        text-shadow:
+            -4px 4px 0 hsla(256, 100%, 50%, 1),
+            -3px 3px 0 hsla(256, 100%, 50%, 1),
+            -2px 2px 0 hsla(256, 100%, 50%, 1),
+            -1px 1px 0 hsla(256, 100%, 50%, 1),
+            4px -4px 0 hsla(180, 100%, 50%, 1),
+            3px -3px 0 hsla(180, 100%, 50%, 1),
+            2px -2px 0 hsla(180, 100%, 50%, 1),
+            1px -1px 0 hsla(180, 100%, 50%, 1);
+    }
+
+    75% {
+        text-shadow:
+            4px 4px 0 hsla(180, 100%, 50%, 1),
+            3px 3px 0 hsla(180, 100%, 50%, 1),
+            2px 2px 0 hsla(180, 100%, 50%, 1),
+            1px 1px 0 hsla(180, 100%, 50%, 1),
+            -4px -4px 0 hsla(256, 100%, 50%, 1),
+            -3px -3px 0 hsla(256, 100%, 50%, 1),
+            -2px -2px 0 hsla(256, 100%, 50%, 1),
+            -1px -1px 0 hsla(256, 100%, 50%, 1);
+    }
+
+    100% {
+        text-shadow:
+            4px -4px 0 hsla(256, 100%, 50%, 1),
+            3px -3px 0 hsla(256, 100%, 50%, 1),
+            2px -2px 0 hsla(256, 100%, 50%, 1),
+            1px -1px 0 hsla(256, 100%, 50%, 1),
+            -4px 4px 0 hsla(180, 100%, 50%, 1),
+            -3px 3px 0 hsla(180, 100%, 50%, 1),
+            -2px 2px 0 hsla(180, 100%, 50%, 1),
+            -1px 1px 0 hsla(180, 100%, 50%, 1);
+    }
+}
