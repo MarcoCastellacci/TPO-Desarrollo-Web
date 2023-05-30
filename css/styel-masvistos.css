@@ -13,8 +13,13 @@ body {
     margin-top: 20px;
 }
 
-.filtros{
+.filtros {
     margin: .1rem .1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .links a {
@@ -61,9 +66,49 @@ header {
     margin: 0.2rem;
 }
 
+.btn-primary {
+    font-size: 100%;
+}
+
 .btn a {
     text-decoration: none;
     color: #fff;
+}
+
+label {
+        line-height: 1 !important;
+    margin: 0.3em .3em;
+    display: flex;
+}
+
+input {
+    margin: 0 .1em;
+    display: flex;
+    appearance: none;
+    /* Desactiva la apariencia predeterminada */
+    width: 20px;
+    height: 15px;
+    border: 1px solid #002966;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Estilo del cuadro de check cuando está marcado */
+input:checked {
+    background-color: #40a84e;
+    border-color: #010c9e;
+}
+
+/* Estilo del marcador dentro del cuadro de check */
+input:checked:after {
+    content: "\2713";
+    /* Código del símbolo de marca de verificación */
+    font-size: 14px;
+    color: #fff;
+    position: absolute;
+    top: 2px;
+    left: 5px;
 }
 
 .show-container {
@@ -151,7 +196,7 @@ footer {
     justify-content: center;
 }
 
-.tiutlo{
+.tiutlo {
     width: 50%;
 }
 

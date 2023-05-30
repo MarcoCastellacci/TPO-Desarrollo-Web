@@ -4,11 +4,36 @@ document.addEventListener('DOMContentLoaded', function () {
         const showsApi = await response.json();
         const showsMasVistos = showsApi.filter(show => show.rating.average >= 8.5);
 
+        let numElementosMostrados = 3; // Número inicial de elementos mostrados
+
+        function verMas() {
+            const showsContainer = document.getElementById("shows-masVistos");
+            const elementos = showsContainer.children;
+            const btnVerMas = document.getElementById("btn-ver-mas");
+
+            // Mostrar más elementos si hay más disponibles
+            if (numElementosMostrados < elementos.length) {
+                const elementosAMostrar = Math.min(numElementosMostrados + 10, elementos.length);
+                for (let i = numElementosMostrados; i < elementosAMostrar; i++) {
+                    elementos[i].style.display = "block";
+                }
+                numElementosMostrados = elementosAMostrar;
+                btnVerMas.textContent = "Ver menos";
+            } else { // Ocultar elementos si se han mostrado todos
+                for (let i = numElementosMostrados - 1; i > 2; i--) {
+                    elementos[i].style.display = "none";
+                }
+                numElementosMostrados = 3;
+                btnVerMas.textContent = "Ver más";
+            }
+        }
+
         function renderCards(showsArray) {
             if (showsArray.length > 0) {
                 let cards = [];
                 for (let show of showsArray) {
                     const summary = show.summary && show.summary.length > 2 ? (show.summary.length > 40 ? show.summary.substring(0, 40) + '...' : show.summary) : '';
+                    // console.log(show.summary);
                     const uniqueId = `resumen-${show.id}`;
                     const card = `
                                 <div class="card card-home">
@@ -19,8 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                         </div>
                                         <div class="card-body">
                                             <h5 class="card-title">${show.name}</h5>
-                                            <p class="card-text summary-short" id="${uniqueId}" data-contenido="${show.summary}">${summary}</p>
-                                            <button class="mostrar-mas btn btn-primary" data-unique-id="${uniqueId}" data-summary="${show.summary}" > Mostrar más</button>
                                             <a href="./index-ld.html?id=${show.id}" class="btn btn-primary">Más sobre ${show.name}</a>
                                         </div>
                                         <div class="card-footer text-body-secondary">
@@ -81,32 +104,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function inicializar() {
             renderCards(showsMasVistos);
-
-            const btnVerMas = document.getElementById('btn-ver-mas');
-            btnVerMas.addEventListener('click', function () {
-                // No se necesita ninguna acción aquí
-            });
-
             const showsContainer = document.getElementById("shows-masVistos");
-            if (showsContainer) {
-                showsContainer.addEventListener('click', function (event) {
-                    if (event.target.classList.contains('mostrar-mas')) {
-                        const uniqueId = event.target.dataset.uniqueId;
-                        const resumenTruncado = document.getElementById(uniqueId);
-                        if (resumenTruncado.parentElement.firstChild === resumenTruncado && resumenTruncado.childNodes.length > 0) {
-                            resumenTruncado.innerHTML = resumenTruncado.innerHTML.replace(/["&gt;]/g, '');
-                        }
-                        const contenidoCompleto = resumenTruncado.getAttribute('data-contenido');
-                        mostrarPopup(contenidoCompleto);
-                    }
-                });
-            } else {
-                console.error("El elemento con ID 'shows-masVistos' no se encontró en el DOM.");
-            }
+            const elementos = showsContainer.children;
+            console.log(elementos[0]);
+            elementos[0].style.display = "none"; // Ocultar el primer elemento
 
-            ocultarElementosProblematicos(); // Llamada para ocultar elementos problemáticos
+            if (elementos.length > 0) {
+                elementos[0].style.display = "none"; // Ocultar el primer elemento
+
+                for (let i = 1; i < elementos.length && i < 5; i++) {
+                    elementos[i].style.display = "block";
+                }
+            }
         }
+
         inicializar();
+
     }
 
     getShows();

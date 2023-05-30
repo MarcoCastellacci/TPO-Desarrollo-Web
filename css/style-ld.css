@@ -79,6 +79,17 @@ main {
   line-height: 2;
 }
 
+
+.show h1 {
+  font-size: 3em;
+  margin: .5rem 0;
+}
+
+.show p {
+  font-size: 1em;
+  margin: .3rem 0;
+}
+
 .actor {
   display: flex;
   flex-direction: column;

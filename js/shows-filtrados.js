@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     async function getShows() {
         const response = await fetch("https://api.tvmaze.com/shows");
         const showsApi = await response.json();
-        const showsMasVistos = showsApi.filter(show => show.rating.average >= 8);
-        console.log(showsMasVistos);
+        const randomShows = getRandomShows(showsApi, 15);
+        renderCards(randomShows);
+
 
         function crearChecks() {
             let checkboxes = document.getElementById(`checkbox`); // Llamamos al Id del Html
@@ -16,49 +17,28 @@ document.addEventListener('DOMContentLoaded', function () {
             // Si deseas eliminar elementos duplicados, utiliza el método filter
             checkboxFilter = checkboxFilter.filter((genre, index, self) => {
                 return self.indexOf(genre) === index;
-            }); // Con este .map recorremos el array original filtramos por "category" y con "new Set" eliminamos los repetidos 
+            });
 
             let checkHtml = "";
             checkboxFilter.forEach(check => {
                 checkHtml += `<label><input type="checkbox" value="${check}">${check}</label>`;
             });
-            checkboxes.innerHTML = checkHtml; // Imprimimos el template armado
+            checkboxes.innerHTML = checkHtml;
 
-            checkboxSelected = []; // Reiniciamos el arreglo de checkboxes seleccionados
+            checkboxSelected = [];
+            checkbox = document.querySelectorAll("input[type=checkbox]"); // Actualizar la lista de checkboxes
+            checkbox.forEach(check => check.addEventListener("change", arrayFiltered)); // Usar el evento "change" en lugar de "click"
         }
 
-        function arrayFiltered() {
-            const showsFiltered = showsApi.filter(show => {
-                if (checkboxSelected.length === 0) {
-                    return true; // Si no hay checkbox seleccionados, mostrar todos los programas
-                } else {
-                    // Verificar si algún género del programa coincide con los checkbox seleccionados
+        async function arrayFiltered() {
+            if (checkboxSelected.length === 0) {
+                const randomShows = await getRandomShows(showsApi, 15);
+                renderCards(randomShows);
+            } else {
+                const showsFiltered = showsApi.filter(show => {
                     return show.genres.some(genre => checkboxSelected.includes(genre));
-                }
-            });
-
-            renderCards(showsFiltered);
-        }
-
-        function verMas() {
-            const showsContainer = document.getElementById("shows-filtrados");
-            const elementos = showsContainer.children;
-            const btnVerMas = document.getElementById("btn-ver-mas");
-
-            // Mostrar más elementos si hay más disponibles
-            if (numElementosMostrados < elementos.length) {
-                const elementosAMostrar = Math.min(numElementosMostrados + 10, elementos.length);
-                for (let i = numElementosMostrados; i < elementosAMostrar; i++) {
-                    elementos[i].style.display = "block";
-                }
-                numElementosMostrados = elementosAMostrar;
-                btnVerMas.textContent = "Ver menos";
-            } else { // Ocultar elementos si se han mostrado todos
-                for (let i = numElementosMostrados - 1; i > 2; i--) {
-                    elementos[i].style.display = "none";
-                }
-                numElementosMostrados = 3;
-                btnVerMas.textContent = "Ver más";
+                });
+                renderCards(showsFiltered);
             }
         }
 
@@ -69,10 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (showsArray.length > 0) {
                 let cards = [];
                 for (let show of showsArray) {
-                    const summary = show.summary && show.summary.length > 2 ? (show.summary.length > 40 ? show.summary.substring(0, 40) + '...' : show.summary) : '';
-                    const uniqueId = `resumen-${show.id}`;
                     const card = `
-            <div class="card card-home" style="display: none;">
+            <div class="card card-home">
               <img src="${show.image.original}" class="card-img-top" alt="${show.name} Image">
               <div class="card text-center card-show">
                 <div class="card-header">
@@ -80,8 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">${show.name}</h5>
-                  <p class="card-text summary-short" id="${uniqueId}" data-contenido="${show.summary}">${summary}</p>
-                  <button class="mostrar-mas btn btn-primary" data-unique-id="${uniqueId}" data-summary="${show.summary}" > Mostrar más</button>
                   <a href="./index-ld.html?id=${show.id}" class="btn btn-primary">Más sobre ${show.name}</a>
                 </div>
                 <div class="card-footer text-body-secondary">
@@ -133,42 +109,17 @@ document.addEventListener('DOMContentLoaded', function () {
         function inicializar() {
             crearChecks();
 
-            const checkbox = document.querySelectorAll("input[type=checkbox]");
-            checkbox.forEach(check => check.addEventListener("click", (event) => {
-                let checked = event.target.checked;
-                if (checked) {
-                    checkboxSelected.push(event.target.value);
-                } else {
-                    checkboxSelected = checkboxSelected.filter(nocheckeado => nocheckeado !== event.target.value);
-                }
-                arrayFiltered();
-            }));
-
-            const btnVerMas = document.getElementById('btn-ver-mas');
-            btnVerMas.addEventListener('click', verMas);
-
-            const showsContainer = document.getElementById("shows-filtrados");
-            const elementos = showsContainer.children;
-            console.log(elementos);
-            for (let i = 1; i < elementos.length && i < 5; i++) {
-                elementos[i].style.display = "block";
+            if (checkboxSelected.length === 0) {
+                const randomShows = getRandomShows(showsApi, 15);
+                renderCards(randomShows);
             }
-            if (elementos.length > 4) {
-                elementos[3].style.display = "none";
-            }
-
-            showsContainer.addEventListener('click', function (event) {
-                if (event.target.classList.contains('mostrar-mas')) {
-                    const uniqueId = event.target.dataset.uniqueId;
-                    const resumenTruncado = document.getElementById(uniqueId);
-                    if (resumenTruncado.parentElement.firstChild === resumenTruncado && resumenTruncado.childNodes.length > 0) {
-                        resumenTruncado.innerHTML = resumenTruncado.innerHTML.replace(/[">]/g, '');
-                    }
-                    const contenidoCompleto = resumenTruncado.getAttribute('data-contenido');
-                    mostrarPopup(contenidoCompleto);
-                }
-            });
         }
+
+        function getRandomShows(showsArray, numShows) {
+            const shuffledShows = showsArray.sort(() => 0.5 - Math.random());
+            return shuffledShows.slice(0, numShows);
+        }
+
 
         inicializar();
     }

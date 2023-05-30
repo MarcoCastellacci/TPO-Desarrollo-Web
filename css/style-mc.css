@@ -13,7 +13,7 @@ body {
     margin-top: 20px;
 }
 
-.summary-short{
+.summary-short {
     height: 40%;
 }
 
@@ -151,7 +151,7 @@ footer {
     justify-content: center;
 }
 
-.tiutlo{
+.tiutlo {
     width: 50%;
 }
 
@@ -159,4 +159,26 @@ footer {
     width: 30px;
     display: flex;
     margin-right: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+.info.form {
+    margin: 1.5rem;
+}
+
+form {
+    width: 100%;
+    margin: 1.5em;
+}
+
+form div{
+    margin: 1.5em;
+
+}
+
+form div>input {
+    width: 80%;
 }
