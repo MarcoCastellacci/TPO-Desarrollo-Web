@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); //para que el form no se envíe automático
 
         // valores de los campos
-        var nombre = document.querySelector('input[name="nombre"]').value;
-        var apellido = document.querySelector('input[name="apellido"]').value;
+        var nombre = document.querySelector('input[name="name"]').value;
+        // var apellido = document.querySelector('input[name="apellido"]').value;
         var email = document.querySelector('input[name="email"]').value;
-        var mensaje = document.querySelector('textarea[name="mensaje"]').value;
+        var mensaje = document.querySelector('textarea[name="message"]').value;
 
         //validación de nombre y apellido no exedan los 10 caracteres
         if (nombre.length > 10) {
