@@ -79,6 +79,11 @@ main {
   line-height: 2;
 }
 
+actor p {
+  font-size: 16px; /* Tamaño de fuente ajustado para dispositivos móviles */
+  margin: 10px 0; /* Margen superior e inferior reducido para separar el texto */
+  word-wrap: break-word; /* Permite el ajuste de palabras largas en varias líneas */
+}
 
 .show h1 {
   font-size: 3em;
