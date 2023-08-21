@@ -1,21 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
     var form = document.querySelector('form');
     form.addEventListener('submit', function (event) {
-        event.preventDefault(); //para que el form no se envíe automático
+        event.preventDefault(); //para que el form no se envíe automáticamente
 
         // valores de los campos
         var nombre = document.querySelector('input[name="name"]').value;
-        // var apellido = document.querySelector('input[name="apellido"]').value;
         var email = document.querySelector('input[name="email"]').value;
         var mensaje = document.querySelector('textarea[name="message"]').value;
 
-        //validación de nombre y apellido no exedan los 10 caracteres
+        //validación de nombre no exceda los 10 caracteres
         if (nombre.length > 10) {
             alert('El campo de nombre no puede exceder los 10 caracteres');
-            return;
-        }
-        if (apellido.length > 10) {
-            alert('El campo de apellido no puede exceder los 10 caracteres');
             return;
         }
 
@@ -31,7 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        //Si todo ok, se puede enviar el form
-        form.submit();
+        // Mostrar alertas para confirmar datos
+        alert('Nombre: ' + nombre);
+        alert('Email: ' + email);
+        alert('Mensaje: ' + mensaje);
+
+        // Restablecer los campos del formulario
+        form.reset();
+
+        // Mostrar alerta de datos enviados
+        alert('Datos Enviados');
     });
 });
